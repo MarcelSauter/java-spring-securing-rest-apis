@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
@@ -19,12 +21,26 @@ public class ResolutionsApplication extends WebSecurityConfigurerAdapter {
 		httpSecurity
 				.authorizeRequests(authz -> authz
 					.anyRequest().authenticated())
-				.httpBasic(basic -> {});
+				.httpBasic(basic -> {})
+				.cors(cors -> {});
 	}
 
 	@Bean
 	public UserDetailsService userDetailsService(UserRepository userRepository) {
 		return new UserRepositoryUserDetailsService(userRepository);
+	}
+
+	@Bean
+	WebMvcConfigurer webMvcConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("http://localhost:4200")
+						.allowedMethods("HEAD")
+						.allowedHeaders("Authorization");
+			}
+		};
 	}
 
 	public static void main(String[] args) {
