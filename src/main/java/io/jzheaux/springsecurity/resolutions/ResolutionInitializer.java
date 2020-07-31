@@ -3,8 +3,6 @@ package io.jzheaux.springsecurity.resolutions;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Component
 public class ResolutionInitializer implements SmartInitializingSingleton {
 	private final ResolutionRepository resolutions;
@@ -27,15 +25,13 @@ public class ResolutionInitializer implements SmartInitializingSingleton {
 		user.grantAuthority("resolution:write");
 		this.userRepository.save(user);
 
-		User hasRead = new User();
-		hasRead.setUsername("hasRead");
-		hasRead.setPassword("{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W");
+		User hasRead = new User("hasRead",
+				"{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W");
 		hasRead.grantAuthority("resolution:read");
 		this.userRepository.save(hasRead);
 
-		User hasWrite = new User();
-		hasWrite.setUsername("hasWrite");
-		hasWrite.setPassword("{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W");
+		User hasWrite = new User("hasWrite",
+				"{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W");
 		hasWrite.grantAuthority("resolution:write");
 		this.userRepository.save(hasWrite);
 	}
