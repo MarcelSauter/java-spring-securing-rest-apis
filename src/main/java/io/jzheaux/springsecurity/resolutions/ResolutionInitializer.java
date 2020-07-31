@@ -20,13 +20,13 @@ public class ResolutionInitializer implements SmartInitializingSingleton {
 		this.resolutions.save(new Resolution("Hang Christmas Lights", "user"));
 
 		User user = new User("user",
-				"{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W");
+				"Hallo");
 		user.grantAuthority("resolution:read");
 		user.grantAuthority("resolution:write");
 		this.userRepository.save(user);
 
 		User hasRead = new User("hasRead",
-				"{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W");
+				"Hallo");
 		hasRead.grantAuthority("resolution:read");
 		this.userRepository.save(hasRead);
 
@@ -34,5 +34,9 @@ public class ResolutionInitializer implements SmartInitializingSingleton {
 				"{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W");
 		hasWrite.grantAuthority("resolution:write");
 		this.userRepository.save(hasWrite);
+
+		User admin = new User("admin", "{bcrypt}$2a$10$MywQEqdZFNIYnx.Ro/VQ0ulanQAl34B5xVjK2I/SDZNVGS5tHQ08W");
+		admin.grantAuthority("ROLE_ADMIN");
+		this.userRepository.save(admin);
 	}
 }
