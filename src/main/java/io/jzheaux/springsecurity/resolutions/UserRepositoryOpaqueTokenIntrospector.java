@@ -15,7 +15,7 @@ public class UserRepositoryOpaqueTokenIntrospector implements OpaqueTokenIntrosp
     private final OpaqueTokenIntrospector delegate;
     private final UserRepository userRepository;
 
-    public UserRepositoryOpaqueTokenIntrospector(OpaqueTokenIntrospector delegate, UserRepository userRepository) {
+    public UserRepositoryOpaqueTokenIntrospector(UserRepository userRepository, OpaqueTokenIntrospector delegate) {
         this.delegate = delegate;
         this.userRepository = userRepository;
     }

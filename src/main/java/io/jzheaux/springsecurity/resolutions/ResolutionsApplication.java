@@ -62,7 +62,6 @@ public class ResolutionsApplication extends WebSecurityConfigurerAdapter {
 				properties.getOpaquetoken().getIntrospectionUri(),
 				properties.getOpaquetoken().getClientId(),
 				properties.getOpaquetoken().getClientSecret());
-
 		return new UserRepositoryOpaqueTokenIntrospector(userRepository, introspector);
 	}
 
