@@ -16,14 +16,14 @@ import java.util.UUID;
 @RestController
 public class ResolutionController {
 	private final ResolutionRepository resolutions;
-	private final UserRepository userRepository;
+	UserService userRepository;
 
-	public ResolutionController(ResolutionRepository resolutions, UserRepository userRepository) {
+	public ResolutionController(ResolutionRepository resolutions, UserService userRepository) {
 		this.resolutions = resolutions;
 		this.userRepository = userRepository;
 	}
 
-	@CrossOrigin(allowCredentials = "true")
+	@CrossOrigin
 	@GetMapping("/resolutions")
 	@PreAuthorize("hasAuthority('READ')")
 	@PostFilter("@post.filter(#root)")
@@ -32,8 +32,8 @@ public class ResolutionController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("user:read"))) {
 			for (Resolution resolution : resolutions)  {
-				String fullName = this.userRepository.findByUsername(resolution.getOwner())
-						.map(User::getFullName).orElse("Anonymous");
+				String fullName = this.userRepository.getFullName(resolution.getOwner())
+						.orElse("Anonymous");
 				resolution.setText(resolution.getText() + ", by " + fullName);
 			}
 		}
